@@ -380,3 +380,30 @@ export type Slug = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/queries/layout.query.ts
+// Variable: HEADER_QUERY
+// Query: *[_type == "header"] | order(_updatedAt desc)[0]
+export type HEADER_QUERYResult = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  links?: Array<{
+    _key: string;
+  } & HeaderLink>;
+  button?: HeaderLink;
+  enableSearch?: boolean;
+} | null;
+// Variable: LEFT_PANEL_QUERY
+// Query: *[_type == "leftPanel"] | order(_updatedAt desc)[0]
+export type LEFT_PANEL_QUERYResult = null;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "*[_type == \"header\"] | order(_updatedAt desc)[0]": HEADER_QUERYResult;
+    "*[_type == \"leftPanel\"] | order(_updatedAt desc)[0]": LEFT_PANEL_QUERYResult;
+  }
+}
