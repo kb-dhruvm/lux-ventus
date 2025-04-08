@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { imageFieldValidation } from "../validations/imageFieldValidation";
+import { imageFieldValidation } from "../../common/validations/imageFieldValidation";
 
 export const hostsType = defineType({
   name: "hosts",
@@ -35,14 +35,19 @@ export const hostsType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "hostText",
-      title: "Host Indentity Text",
+      name: "socialLinks",
+      title: "Social Links",
       type: "array",
       of: [
         {
           type: "socialLinks",
         },
       ],
+    }),
+    defineField({
+      name: "hostText",
+      title: "Host Indentity Text",
+      type: "string",
     }),
   ],
 });

@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { imageFieldValidation } from "../validations/imageFieldValidation";
+import { imageFieldValidation } from "../../common/validations/imageFieldValidation";
 
 export const postsType = defineType({
   name: "posts",
@@ -31,10 +31,8 @@ export const postsType = defineType({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
-      initialValue: () => new Date().toISOString(), // Set the initial value to the current date and time in ISO format
       options: {
         dateFormat: "YYYY-MM-DD", // Set the date format to YYYY-MM-DD
-        timeFormat: "HH:mm", // Set the time format to HH:mm
       },
       validation: (Rule) => Rule.required().max(new Date().toISOString()),
     }),

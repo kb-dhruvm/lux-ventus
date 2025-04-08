@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { imageFieldValidation } from "../validations/imageFieldValidation";
+import { imageFieldValidation } from "../../common/validations/imageFieldValidation";
 
 export const categoriesType = defineType({
   name: "categories",
