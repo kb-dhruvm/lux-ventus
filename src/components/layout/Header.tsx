@@ -27,7 +27,7 @@ export default function Header({ navItems, button, showSearch }: IHeaderProps) {
 
   return (
     <>
-      <header className="container flex justify-between items-center py-4 px-6 md:px-16">
+      <header className="container flex justify-between items-center py-4 md:py-9 px-6 md:px-16">
         <div className="logo">
           <Link href="/">
             <Image

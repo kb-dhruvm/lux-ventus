@@ -24,11 +24,13 @@ export const pagesType = defineType({
       name: "heroSection",
       title: "Hero Section",
       type: "heroSection",
+      hidden: ({ parent }) => parent?.slug?.current !== "home",
     }),
     defineField({
       name: "topics",
       title: "Topics",
       type: "topicsSlider",
+      hidden: ({ parent }) => parent?.slug?.current !== "home",
     }),
     defineField({
       name: "body",
