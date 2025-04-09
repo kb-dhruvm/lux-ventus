@@ -33,8 +33,6 @@ export default async function RootLayout({
 
   const { button, links, enableSearch } = headerData;
 
-  console.log(headerData);
-
   const _navLinks = links?.map((link) => ({
     slug: link.link!,
     title: link.title!,
