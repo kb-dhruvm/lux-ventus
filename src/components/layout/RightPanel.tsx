@@ -3,6 +3,7 @@ import React, { FC, HTMLAttributes } from "react";
 import FeaturePost from "./FeaturePost";
 import { IRightPanel } from "./StandardPage";
 import { urlFor } from "@/sanity/lib/image";
+import TrandingPostsSection from "../pages/TrandingPostsSection";
 
 type IRightPanelProps = HTMLAttributes<HTMLDivElement> & {
   body: NonNullable<IRightPanel>;
@@ -12,7 +13,7 @@ const RightPanel: FC<IRightPanelProps> = (props) => {
   const { body, className, ...others } = props;
 
   return (
-    <div className={clsx("w-full", className)} {...others}>
+    <div className={clsx("w-full flex flex-col gap-24", className)} {...others}>
       {body.map((item) => {
         if (item._type === "featurePost") {
           const { featurePost, _key } = item;
@@ -56,6 +57,56 @@ const RightPanel: FC<IRightPanelProps> = (props) => {
                   : undefined
               }
             />
+          );
+        }
+
+        if (item._type === "trandingPost") {
+          const { title, posts, _key } = item;
+
+          if (!posts || posts.length === 0) {
+            return null;
+          }
+
+          const _posts = posts.map((post) => {
+            const {
+              author,
+              title,
+              image,
+              publishedAt,
+              alt,
+              category,
+              pageLocation,
+              teaserDescription,
+            } = post;
+
+            return {
+              image: image
+                ? {
+                    src: urlFor(image).url(),
+                    alt: alt || title || "",
+                  }
+                : undefined,
+              link: pageLocation,
+              title,
+              author: author
+                ? {
+                    title: author.name,
+                    image: {
+                      alt: author.alt,
+                      src: author.image
+                        ? urlFor(author.image).url()
+                        : undefined,
+                    },
+                  }
+                : undefined,
+              date: publishedAt,
+              category: category?.title,
+              description: teaserDescription,
+            };
+          });
+
+          return (
+            <TrandingPostsSection key={_key} title={title} posts={_posts} />
           );
         }
         return null;
