@@ -13,7 +13,14 @@ export const PAGE_QUERY =
     selectBlcks[]{
       ...,
       selectHost->,
-      selectCategory->
+      selectCategory->,
+      selectPost[]->{
+            title,
+    image,
+    alt,
+    ratings,
+        pageLocation
+      }
     }
   },
   body[]{

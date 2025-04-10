@@ -92,12 +92,13 @@ export type TopRatedPosts = {
   _type: "topRatedPosts";
   title?: string;
   isManual?: boolean;
-  selectPost?: {
+  selectPost?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "posts";
-  };
+  }>;
 };
 
 export type NewsLetterCard = {
@@ -139,6 +140,7 @@ export type Posts = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  pageLocation?: string;
   title?: string;
   slug?: Slug;
   teaserDescription?: string;
@@ -398,10 +400,30 @@ export type HEADER_QUERYResult = {
 // Variable: LEFT_PANEL_QUERY
 // Query: *[_type == "leftPanel"] | order(_updatedAt desc)[0]
 export type LEFT_PANEL_QUERYResult = null;
+// Variable: TOP_RATED_POSTS_QUERY
+// Query: *[_type == "posts"] | order(ratings desc)[0...5]{  pageLocation,    title,    image,    alt,    ratings}
+export type TOP_RATED_POSTS_QUERYResult = Array<{
+  pageLocation: string | null;
+  title: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  alt: string | null;
+  ratings: number | null;
+}>;
 
 // Source: ./src/queries/pages.query.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "pages" && slug.current == $slug][0]{  title,  heroSection,  topics{    title,    topics[]->  },  leftPannel->{    ...,    selectBlcks[]{      ...,      selectHost->,      selectCategory->    }  },  body[]{    ...,    featurePost->  }}
+// Query: *[_type == "pages" && slug.current == $slug][0]{  title,  heroSection,  topics{    title,    topics[]->  },  leftPannel->{    ...,    selectBlcks[]{      ...,      selectHost->,      selectCategory->,      selectPost[]->{            title,    image,    alt,    ratings,        pageLocation      }    }  },  body[]{    ...,    featurePost->  }}
 export type PAGE_QUERYResult = {
   title: string | null;
   heroSection: HeroSection | null;
@@ -463,6 +485,7 @@ export type PAGE_QUERYResult = {
         alt?: string;
       } | null;
       selectHost: null;
+      selectPost: null;
     } | {
       _key: string;
       _type: "hostCard";
@@ -493,23 +516,37 @@ export type PAGE_QUERYResult = {
         hostText?: string;
       } | null;
       selectCategory: null;
+      selectPost: null;
     } | {
       _key: string;
       _type: "newsLetterCard";
       showNewsLetterCard?: boolean;
       selectHost: null;
       selectCategory: null;
+      selectPost: null;
     } | {
       _key: string;
       _type: "topRatedPosts";
       title?: string;
       isManual?: boolean;
-      selectPost?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "posts";
-      };
+      selectPost: Array<{
+        title: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+        ratings: number | null;
+        pageLocation: string | null;
+      }> | null;
       selectHost: null;
       selectCategory: null;
     }> | null;
@@ -523,6 +560,7 @@ export type PAGE_QUERYResult = {
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
+      pageLocation?: string;
       title?: string;
       slug?: Slug;
       teaserDescription?: string;
@@ -576,6 +614,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"header\"] | order(_updatedAt desc)[0]": HEADER_QUERYResult;
     "*[_type == \"leftPanel\"] | order(_updatedAt desc)[0]": LEFT_PANEL_QUERYResult;
-    "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory->\n    }\n  },\n  body[]{\n    ...,\n    featurePost->\n  }\n}": PAGE_QUERYResult;
+    "*[_type == \"posts\"] | order(ratings desc)[0...5]{\n  pageLocation,\n    title,\n    image,\n    alt,\n    ratings\n}\n": TOP_RATED_POSTS_QUERYResult;
+    "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory->,\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->\n  }\n}": PAGE_QUERYResult;
   }
 }

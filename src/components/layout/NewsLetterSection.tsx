@@ -9,7 +9,7 @@ const NewsLetterSection: FC<INewsLetterSectionProps> = (props) => {
   return (
     <div
       className={clsx(
-        "bg-white rounded-2xl lg:pl-5 lg:pr-7 lg:pt-10 lg:pb-12 px-10 pb-7 pt-5 shadow-lg flex flex-col lg:justify-center justify-start",
+        "bg-white rounded-2xl lg:pl-5 lg:pr-7 lg:pt-10 lg:pb-12 px-10 pb-7 pt-5 shadow-[0px_6px_6px_0px_#0000000D] flex flex-col lg:justify-center justify-start",
         className
       )}
       {...others}

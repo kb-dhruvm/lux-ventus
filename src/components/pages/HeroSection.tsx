@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export type IImage = {
   src?: string;
-  alt?: string;
+  alt?: string | null;
 };
 
 type IHeroSectionProps = HTMLAttributes<HTMLElement> & {
@@ -70,7 +70,9 @@ const HeroSection: FC<IHeroSectionProps> = (props) => {
           )}
 
           {description && (
-            <p className="max-w-[494px] text-sm sm:text-xl font-light text-center md:text-left">{description}</p>
+            <p className="max-w-[494px] text-sm sm:text-xl font-light text-center md:text-left">
+              {description}
+            </p>
           )}
         </div>
       </div>
