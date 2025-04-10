@@ -25,8 +25,6 @@ const RootPages: FC<IRootPagesProps> = async (props) => {
 
   const { heroSection, topics, body, leftPannel } = data;
 
-  console.log(leftPannel);
-
   return (
     <main>
       {heroSection && (
