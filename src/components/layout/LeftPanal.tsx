@@ -9,6 +9,7 @@ import NewsLetterSection from "./NewsLetterSection";
 import TopRatedSection from "./TopRatedSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TOP_RATED_POSTS_QUERY } from "@/queries/layout.query";
+import CategoriesSection from "./CategoriesSection";
 
 type ILeftPanalProps = {
   leftPanal: NonNullable<ILeftPannel>["selectBlcks"];
@@ -81,6 +82,11 @@ const LeftPanal: FC<ILeftPanalProps> = async (props) => {
           return (
             <TopRatedSection key={item._key} title="Top Rateds" posts={posts} />
           );
+        }
+        if (item._type === "categoryCard") {
+          const { selectCategory, _key } = item;
+          if (!selectCategory) return null;
+          return <CategoriesSection key={_key} categories={selectCategory} />;
         }
         return null;
       })}

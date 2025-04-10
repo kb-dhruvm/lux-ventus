@@ -8,8 +8,8 @@ export const categotyCardType = defineType({
     defineField({
       name: "selectCategory",
       title: "Select Category",
-      type: "reference",
-      to: [{ type: "categories" }],
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "categories" }] }],
       validation: (Rule) => Rule.required(),
     }),
   ],

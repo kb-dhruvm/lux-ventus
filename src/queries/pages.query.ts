@@ -13,7 +13,10 @@ export const PAGE_QUERY =
     selectBlcks[]{
       ...,
       selectHost->,
-      selectCategory->,
+      selectCategory[]->{
+        title,
+        "postCount": count(*[_type == "posts" && references(^._id)])
+      },
       selectPost[]->{
             title,
     image,
