@@ -58,7 +58,9 @@ const RootPages: FC<IRootPagesProps> = async (props) => {
           }))}
         />
       )}
-      {body && <StandardPage leftPanal={leftPannel?.selectBlcks} />}
+      {body && (
+        <StandardPage leftPanel={leftPannel?.selectBlcks} rightPanel={body} />
+      )}
     </main>
   );
 };

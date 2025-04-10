@@ -111,12 +111,13 @@ export type TrandingPost = {
   _type: "trandingPost";
   title?: string;
   isManual?: boolean;
-  posts?: {
+  posts?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "posts";
-  };
+  }>;
 };
 
 export type FeaturePost = {
@@ -424,7 +425,7 @@ export type TOP_RATED_POSTS_QUERYResult = Array<{
 
 // Source: ./src/queries/pages.query.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "pages" && slug.current == $slug][0]{  title,  heroSection,  topics{    title,    topics[]->  },  leftPannel->{    ...,    selectBlcks[]{      ...,      selectHost->,      selectCategory[]->{        title,        "postCount": count(*[_type == "posts" && references(^._id)])      },      selectPost[]->{            title,    image,    alt,    ratings,        pageLocation      }    }  },  body[]{    ...,    featurePost->  }}
+// Query: *[_type == "pages" && slug.current == $slug][0]{  title,  heroSection,  topics{    title,    topics[]->  },  leftPannel->{    ...,    selectBlcks[]{      ...,      selectHost->,      selectCategory[]->{        title,        "postCount": count(*[_type == "posts" && references(^._id)])      },      selectPost[]->{            title,    image,    alt,    ratings,        pageLocation      }    }  },  body[]{    ...,    featurePost->{      teaserDescription,      alt,      title,      pageLocation,      publishedAt,      image,      author->{          name,          image,          alt        },      category->{        title      }    },    posts[]->{      teaserDescription,      alt,      title,      pageLocation,      publishedAt,      image,      author->{        name,        image,        alt      },      category->{        title      }    }  }}
 export type PAGE_QUERYResult = {
   title: string | null;
   heroSection: HeroSection | null;
@@ -538,29 +539,12 @@ export type PAGE_QUERYResult = {
     _key: string;
     _type: "featurePost";
     featurePost: {
-      _id: string;
-      _type: "posts";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      pageLocation?: string;
-      title?: string;
-      slug?: Slug;
-      teaserDescription?: string;
-      publishedAt?: string;
-      category?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "categories";
-      };
-      author?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "hosts";
-      };
-      image?: {
+      teaserDescription: string | null;
+      alt: string | null;
+      title: string | null;
+      pageLocation: string | null;
+      publishedAt: string | null;
+      image: {
         asset?: {
           _ref: string;
           _type: "reference";
@@ -571,22 +555,71 @@ export type PAGE_QUERYResult = {
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
-      };
-      alt?: string;
-      views?: number;
-      ratings?: number;
+      } | null;
+      author: {
+        name: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+      } | null;
+      category: {
+        title: string | null;
+      } | null;
     } | null;
+    posts: null;
   } | {
     _key: string;
     _type: "trandingPost";
     title?: string;
     isManual?: boolean;
-    posts?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "posts";
-    };
+    posts: Array<{
+      teaserDescription: string | null;
+      alt: string | null;
+      title: string | null;
+      pageLocation: string | null;
+      publishedAt: string | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      author: {
+        name: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+      } | null;
+      category: {
+        title: string | null;
+      } | null;
+    }> | null;
     featurePost: null;
   }> | null;
 } | null;
@@ -598,6 +631,6 @@ declare module "@sanity/client" {
     "*[_type == \"header\"] | order(_updatedAt desc)[0]": HEADER_QUERYResult;
     "*[_type == \"leftPanel\"] | order(_updatedAt desc)[0]": LEFT_PANEL_QUERYResult;
     "*[_type == \"posts\"] | order(ratings desc)[0...5]{\n  pageLocation,\n    title,\n    image,\n    alt,\n    ratings\n}\n": TOP_RATED_POSTS_QUERYResult;
-    "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory[]->{\n        title,\n        \"postCount\": count(*[_type == \"posts\" && references(^._id)])\n      },\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->\n  }\n}": PAGE_QUERYResult;
+    "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory[]->{\n        title,\n        \"postCount\": count(*[_type == \"posts\" && references(^._id)])\n      },\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n          name,\n          image,\n          alt\n        },\n      category->{\n        title\n      }\n    },\n    posts[]->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n        name,\n        image,\n        alt\n      },\n      category->{\n        title\n      }\n    }\n  }\n}": PAGE_QUERYResult;
   }
 }

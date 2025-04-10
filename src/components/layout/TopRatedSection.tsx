@@ -45,10 +45,10 @@ const TopRatedSection: FC<ITopRatedSectionProps> = (props) => {
               {link && (
                 <Link
                   href={link}
-                  className="flex gap-4 text-primary-300 hover:gap-6 transition-all duration-300"
+                  className="inline-flex items-center text-primary-300 hover:text-primary-400 transition-colors gap-4 group"
                 >
-                  <FaArrowRight size={16} />
-                  <span className="uppercase font-bold text-[12px]">
+                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  <span className="uppercase text-[12px] font-bold tracking-[0.25em]">
                     Read More
                   </span>
                 </Link>

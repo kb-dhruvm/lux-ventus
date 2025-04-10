@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ILeftPannel } from "./StandardPage";
+import { ILeftPanel } from "./StandardPage";
 import HostSection from "./HostSection";
 import { isEmpty } from "lodash";
 import { urlFor } from "@/sanity/lib/image";
@@ -12,18 +12,17 @@ import { TOP_RATED_POSTS_QUERY } from "@/queries/layout.query";
 import CategoriesSection from "./CategoriesSection";
 
 type ILeftPanalProps = {
-  leftPanal: NonNullable<ILeftPannel>["selectBlcks"];
+  leftPanel: NonNullable<ILeftPanel>["selectBlcks"];
 };
 
 const LeftPanal: FC<ILeftPanalProps> = async (props) => {
-  const { leftPanal } = props;
+  const { leftPanel } = props;
 
-  if (!leftPanal || isEmpty(leftPanal)) return null;
+  if (!leftPanel || isEmpty(leftPanel)) return null;
 
-  // Render the components instead of just mapping and not using the result
   return (
     <>
-      {leftPanal.map(async (item) => {
+      {leftPanel.map(async (item) => {
         if (item._type === "hostCard") {
           const { selectHost } = item;
 

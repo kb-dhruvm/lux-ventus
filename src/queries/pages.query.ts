@@ -28,6 +28,37 @@ export const PAGE_QUERY =
   },
   body[]{
     ...,
-    featurePost->
+    featurePost->{
+      teaserDescription,
+      alt,
+      title,
+      pageLocation,
+      publishedAt,
+      image,
+      author->{
+          name,
+          image,
+          alt
+        },
+      category->{
+        title
+      }
+    },
+    posts[]->{
+      teaserDescription,
+      alt,
+      title,
+      pageLocation,
+      publishedAt,
+      image,
+      author->{
+        name,
+        image,
+        alt
+      },
+      category->{
+        title
+      }
+    }
   }
 }`);
