@@ -31,7 +31,7 @@ const FeaturePost: FC<FeaturePostProps> = ({
   return (
     <div
       className={clsx(
-        "bg-white rounded-[20px] overflow-hidden shadow-md",
+        "bg-white rounded-[20px] overflow-hidden shadow-card",
         className
       )}
     >
