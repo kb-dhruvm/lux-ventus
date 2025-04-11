@@ -70,7 +70,13 @@ const RightPanel: FC<IRightPanelProps> = async (props) => {
           if (isManual) {
             posts = selectedPosts;
           } else {
-            const { data } = await sanityFetch({ query: TRANDING_POSTS_QUERY });
+            const { data } = await sanityFetch({
+              query: TRANDING_POSTS_QUERY,
+              params: {
+                start: 0,
+                end: 5,
+              },
+            });
             posts = data;
           }
 
