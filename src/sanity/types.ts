@@ -68,6 +68,15 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Newsletter = {
+  _id: string;
+  _type: "newsletter";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  email?: string;
+};
+
 export type HostCard = {
   _type: "hostCard";
   selectHost?: {
@@ -404,7 +413,7 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Newsletter | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/queries/layout.query.ts
 // Variable: HEADER_QUERY
