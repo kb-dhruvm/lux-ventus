@@ -13,7 +13,8 @@ import { apiVersion, dataset, projectId } from "./src/sanity/env";
 import { schema } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure";
 import { presentationTool } from "sanity/presentation";
-import { resolve } from '@/sanity/presentation/resolve'
+import { resolve } from "@/sanity/presentation/resolve";
+import { media } from "sanity-plugin-media";
 
 export default defineConfig({
   basePath: "/studio",
@@ -22,6 +23,7 @@ export default defineConfig({
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   plugins: [
+    media(),
     presentationTool({
       resolve,
       previewUrl: {

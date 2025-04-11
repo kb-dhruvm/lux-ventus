@@ -407,13 +407,22 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Newsletter | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Newsletter | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | MediaTag | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/queries/layout.query.ts
 // Variable: HEADER_QUERY
@@ -662,7 +671,7 @@ export type PAGE_SEO_QUERYResult = {
 
 // Source: ./src/queries/posts.query.ts
 // Variable: TRANDING_POSTS_QUERY
-// Query: *[_type == "posts"] | order(publishedAt desc)[0...5]{  teaserDescription,  alt,  title,  pageLocation,  publishedAt,  image,  author->{    name,    image,    alt  },  category->{    title  }}
+// Query: *[_type == "posts"] | order(publishedAt desc)[$start...$end]{  teaserDescription,  alt,  title,  pageLocation,  publishedAt,  image,  author->{    name,    image,    alt  },  category->{    title  }}
 export type TRANDING_POSTS_QUERYResult = Array<{
   teaserDescription: string | null;
   alt: string | null;
@@ -711,6 +720,6 @@ declare module "@sanity/client" {
     "*[_type == \"posts\"] | order(ratings desc)[0...5]{\n  pageLocation,\n    title,\n    image,\n    alt,\n    ratings\n}\n": TOP_RATED_POSTS_QUERYResult;
     "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory[]->{\n        title,\n        \"postCount\": count(*[_type == \"posts\" && references(^._id)])\n      },\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n          name,\n          image,\n          alt\n        },\n      category->{\n        title\n      }\n    },\n    posts[]->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n        name,\n        image,\n        alt\n      },\n      category->{\n        title\n      }\n    }\n  }\n}": PAGE_QUERYResult;
     "*[_type == \"pages\" && slug.current == $slug][0]{\n  seo\n}": PAGE_SEO_QUERYResult;
-    "*[_type == \"posts\"] | order(publishedAt desc)[0...5]{\n  teaserDescription,\n  alt,\n  title,\n  pageLocation,\n  publishedAt,\n  image,\n  author->{\n    name,\n    image,\n    alt\n  },\n  category->{\n    title\n  }\n}": TRANDING_POSTS_QUERYResult;
+    "*[_type == \"posts\"] | order(publishedAt desc)[$start...$end]{\n  teaserDescription,\n  alt,\n  title,\n  pageLocation,\n  publishedAt,\n  image,\n  author->{\n    name,\n    image,\n    alt\n  },\n  category->{\n    title\n  }\n}": TRANDING_POSTS_QUERYResult;
   }
 }
