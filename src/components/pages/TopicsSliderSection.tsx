@@ -8,11 +8,11 @@ import React, {
 } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import Link from "next/link";
 import clsx from "clsx";
 import { IImage } from "./HeroSection";
 import Image from "next/image";
 import { EmblaCarouselType } from "embla-carousel";
+import TButton from "../atoms/TButton";
 
 interface Topic {
   image?: IImage;
@@ -123,12 +123,12 @@ const TopicsSlider: FC<ITopicsSliderProps> = (props) => {
                     </h3>
                   )}
                   {slug && (
-                    <Link
+                    <TButton
                       href={slug}
-                      className="2xl:px-10 xl:px-8 lg:px-7 md:px-5 px-8 py-2.5 bg-primary-300 rounded-full hover:bg-primary-400 transition-colors text-[12px] font-bold"
+                      className="2xl:px-10 xl:px-8 lg:px-7 md:px-5 px-8 py-2.5 text-[12px] font-bold"
                     >
                       View More
-                    </Link>
+                    </TButton>
                   )}
                 </div>
               </div>

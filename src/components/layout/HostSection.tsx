@@ -10,6 +10,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { IImage } from "../pages/HeroSection";
+import TButton from "../atoms/TButton";
 
 type IHostSectionProps = HTMLAttributes<HTMLDivElement> & {
   name?: string;
@@ -71,9 +72,9 @@ const HostSection: FC<IHostSectionProps> = (props) => {
             </p>
           )}
           <div className="flex flex-col items-center gap-8 w-full">
-            <button className="bg-primary-300 text-gray-950 py-2.5 rounded-full hover:bg-primary-400 transition-colors w-full max-w-44 font-bold text-[12px]">
+            <TButton href="/contact-us" className="py-2.5 rounded-full !w-full !max-w-44 text-center text-[12px]">
               Let&apos;s Chat
-            </button>
+            </TButton>
             <div className="hidden lg:flex gap-4">
               {socialLinks?.facebook && (
                 <Link
