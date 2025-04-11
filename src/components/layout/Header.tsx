@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import HeaderDrawer from "./HeaderDrawer";
 import menuIcon from "@/assets/hamburger-Icon.svg";
+import TButton from "../atoms/TButton";
 
 interface INavItem {
   title: string;
@@ -54,12 +55,11 @@ export default function Header({ navItems, button, showSearch }: IHeaderProps) {
             ))}
 
           {button && (
-            <Link
+            <TButton
               href={button.slug}
-              className="bg-primary-300 hover:text-white text-gray-950 font-bold px-6 py-2 rounded-full hover:bg-primary-600 transition-colors"
             >
               {button.title}
-            </Link>
+            </TButton>
           )}
           {showSearch && (
             <button
