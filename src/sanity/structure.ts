@@ -15,6 +15,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("leftPannel").title("Left Pannel"),
       S.divider(),
       S.documentTypeListItem("hosts").title("Hosts / Authors").icon(UsersIcon),
+      S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&

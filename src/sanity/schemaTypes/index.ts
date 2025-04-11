@@ -16,6 +16,7 @@ import { categotyCardType } from "./objects/categoryCardType";
 import { leftPannelType } from "./documents/leftPannelType";
 import { hostCardType } from "./objects/hostCardType";
 import { seoType } from "./objects/seoType";
+import { newsletterType } from "./documents/newsletterType";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -36,5 +37,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     leftPannelType,
     hostCardType,
     seoType,
+    newsletterType
   ],
 };
