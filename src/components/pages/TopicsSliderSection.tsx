@@ -106,7 +106,7 @@ const TopicsSlider: FC<ITopicsSliderProps> = (props) => {
                 key={idx}
                 className="xl:flex-[0_0_16.66%] lg:flex-[0_0_20%] md:flex-[0_0_25%] sm:flex-[0_0_33.33%] flex-[0_0_50%] min-w-0 relative sm:px-[5px] px-0.5"
               >
-                <div className="bg-white rounded-[20px] shadow-[0px_6px_6px_0px_#0000000D] sm:p-6 p-3 pt-10 sm:pb-8 pb-6 flex flex-col items-center justify-center transition-all duration-300">
+                <div className="bg-white rounded-[20px] shadow-card sm:p-6 p-3 pt-10 sm:pb-8 pb-6 flex flex-col items-center justify-center transition-all duration-300">
                   {image && image?.src && (
                     <Image
                       src={image.src}

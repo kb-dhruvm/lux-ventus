@@ -35,7 +35,7 @@ const PostCard: FC<IPostCardProps> = ({
   return (
     <div
       className={clsx(
-        "bg-white rounded-[20px] overflow-hidden shadow-[0px_6px_6px_0px_#0000000D] flex",
+        "bg-white rounded-[20px] overflow-hidden shadow-card flex",
         isHorizontal ? "xl:flex-row flex-col xl:col-span-2" : "flex-col"
       )}
     >

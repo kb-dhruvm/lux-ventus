@@ -20,7 +20,7 @@ const TopRatedSection: FC<ITopRatedSectionProps> = (props) => {
   return (
     <div
       className={clsx(
-        "lg:flex hidden flex-col gap-6 pl-3 pt-10 pr-4 pb-14 w-full bg-white rounded-[20px] shadow-[0px_6px_6px_0px_#0000000D]",
+        "lg:flex hidden flex-col gap-6 pl-3 pt-10 pr-4 pb-14 w-full bg-white rounded-[20px] shadow-card",
         className
       )}
       {...others}

@@ -39,6 +39,8 @@
   --text-h5: 32px;
   --text-h6: 26px;
   --text-h1: 46px;
+
+  --shadow-card: box-shadow: 0px 6px 6px 0px #0000000D;
 }
 
 @utility container {

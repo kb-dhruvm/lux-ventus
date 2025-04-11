@@ -39,7 +39,7 @@ const HostSection: FC<IHostSectionProps> = (props) => {
   return (
     <div
       className={clsx(
-        "bg-white rounded-2xl lg:px-8 lg:pt-7 lg:pb-9 py-7 px-[22px] shadow-[0px_6px_6px_0px_#0000000D] flex flex-col",
+        "bg-white rounded-2xl lg:px-8 lg:pt-7 lg:pb-9 py-7 px-[22px] shadow-card flex flex-col",
         className
       )}
       {...others}

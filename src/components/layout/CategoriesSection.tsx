@@ -14,7 +14,7 @@ const CategoriesSection: FC<ICategoriesSectionProps> = (props) => {
   return (
     <div
       className={clsx(
-        "lg:flex hidden flex-col gap-6 pl-[22px] pr-[30px] pt-[38px] pb-11 rounded-[20px] shadow-[0px_6px_6px_0px_#0000000D] bg-white",
+        "lg:flex hidden flex-col gap-6 pl-[22px] pr-[30px] pt-[38px] pb-11 rounded-[20px] shadow-card bg-white",
         className
       )}
       {...others}

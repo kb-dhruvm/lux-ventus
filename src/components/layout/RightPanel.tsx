@@ -4,17 +4,19 @@ import FeaturePost from "./FeaturePost";
 import { IRightPanel } from "./StandardPage";
 import { urlFor } from "@/sanity/lib/image";
 import TrandingPostsSection from "../pages/TrandingPostsSection";
+import { sanityFetch } from "@/sanity/lib/live";
+import { TRANDING_POSTS_QUERY } from "@/queries/posts.query";
 
 type IRightPanelProps = HTMLAttributes<HTMLDivElement> & {
   body: NonNullable<IRightPanel>;
 };
 
-const RightPanel: FC<IRightPanelProps> = (props) => {
+const RightPanel: FC<IRightPanelProps> = async (props) => {
   const { body, className, ...others } = props;
 
   return (
     <div className={clsx("w-full flex flex-col gap-24", className)} {...others}>
-      {body.map((item) => {
+      {body.map(async (item) => {
         if (item._type === "featurePost") {
           const { featurePost, _key } = item;
 
@@ -61,13 +63,22 @@ const RightPanel: FC<IRightPanelProps> = (props) => {
         }
 
         if (item._type === "trandingPost") {
-          const { title, posts, _key } = item;
+          const { title, posts: selectedPosts, isManual, _key } = item;
+
+          let posts;
+
+          if (isManual) {
+            posts = selectedPosts;
+          } else {
+            const { data } = await sanityFetch({ query: TRANDING_POSTS_QUERY });
+            posts = data;
+          }
 
           if (!posts || posts.length === 0) {
             return null;
           }
 
-          const _posts = posts.map((post) => {
+          const _posts = posts?.map((post) => {
             const {
               author,
               title,
