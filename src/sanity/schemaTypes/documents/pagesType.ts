@@ -44,5 +44,10 @@ export const pagesType = defineType({
       type: "reference",
       to: [{ type: "leftPannel" }],
     }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
   ],
 });

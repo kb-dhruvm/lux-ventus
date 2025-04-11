@@ -224,6 +224,28 @@ export type Pages = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "leftPannel";
   };
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 };
 
 export type LeftPannel = {
@@ -382,7 +404,7 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/queries/layout.query.ts
 // Variable: HEADER_QUERY
@@ -623,6 +645,11 @@ export type PAGE_QUERYResult = {
     featurePost: null;
   }> | null;
 } | null;
+// Variable: PAGE_SEO_QUERY
+// Query: *[_type == "pages" && slug.current == $slug][0]{  seo}
+export type PAGE_SEO_QUERYResult = {
+  seo: Seo | null;
+} | null;
 
 // Source: ./src/queries/posts.query.ts
 // Variable: TRANDING_POSTS_QUERY
@@ -674,6 +701,7 @@ declare module "@sanity/client" {
     "*[_type == \"leftPanel\"] | order(_updatedAt desc)[0]": LEFT_PANEL_QUERYResult;
     "*[_type == \"posts\"] | order(ratings desc)[0...5]{\n  pageLocation,\n    title,\n    image,\n    alt,\n    ratings\n}\n": TOP_RATED_POSTS_QUERYResult;
     "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory[]->{\n        title,\n        \"postCount\": count(*[_type == \"posts\" && references(^._id)])\n      },\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n          name,\n          image,\n          alt\n        },\n      category->{\n        title\n      }\n    },\n    posts[]->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n        name,\n        image,\n        alt\n      },\n      category->{\n        title\n      }\n    }\n  }\n}": PAGE_QUERYResult;
+    "*[_type == \"pages\" && slug.current == $slug][0]{\n  seo\n}": PAGE_SEO_QUERYResult;
     "*[_type == \"posts\"] | order(publishedAt desc)[0...5]{\n  teaserDescription,\n  alt,\n  title,\n  pageLocation,\n  publishedAt,\n  image,\n  author->{\n    name,\n    image,\n    alt\n  },\n  category->{\n    title\n  }\n}": TRANDING_POSTS_QUERYResult;
   }
 }

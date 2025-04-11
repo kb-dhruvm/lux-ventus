@@ -62,3 +62,7 @@ export const PAGE_QUERY =
     }
   }
 }`);
+
+export const PAGE_SEO_QUERY = defineQuery(`*[_type == "pages" && slug.current == $slug][0]{
+  seo
+}`);
