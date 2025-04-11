@@ -22,19 +22,25 @@
   --color-primary-950: #062a2d;
 
   /* Gray - font */
-  --color-shark-50: #f6f6f6;
-  --color-shark-100: #e0e0e0; /* Light font */
-  --color-shark-200: #bcbcbc; /* secondary font */
-  --color-shark-300: #b0b0b0;
-  --color-shark-400: #888888;
-  --color-shark-500: #6d6d6d;
-  --color-shark-600: #5d5d5d;
-  --color-shark-700: #4f4f4f;
-  --color-shark-800: #454545;
-  --color-shark-900: #3d3d3d;
-  --color-shark-950: #262626; /* Main font */
+  --color-gray-50: #f6f6f6;
+  --color-gray-100: #e0e0e0; /* Light font */
+  --color-gray-200: #bcbcbc; /* secondary font */
+  --color-gray-300: #b0b0b0;
+  --color-gray-400: #888888;
+  --color-gray-500: #6d6d6d;
+  --color-gray-600: #5d5d5d;
+  --color-gray-700: #4f4f4f;
+  --color-gray-800: #454545;
+  --color-gray-900: #3d3d3d;
+  --color-gray-950: #262626; /* Main font */
+
+  --color-red-450: #F25E5E;
 
   --text-h5: 32px;
+  --text-h6: 26px;
+  --text-h1: 46px;
+
+  --shadow-card: 0px 6px 6px 0px #0000000D;
 }
 
 @utility container {

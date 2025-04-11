@@ -7,6 +7,11 @@ export const postsType = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "pageLocation",
+      title: "Page Location",
+      type: "string",
+    }),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",

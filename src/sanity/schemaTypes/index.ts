@@ -15,6 +15,7 @@ import { topRatedPostsType } from "./objects/topRatedPostsType";
 import { categotyCardType } from "./objects/categoryCardType";
 import { leftPannelType } from "./documents/leftPannelType";
 import { hostCardType } from "./objects/hostCardType";
+import { seoType } from "./objects/seoType";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -33,6 +34,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     topRatedPostsType,
     categotyCardType,
     leftPannelType,
-    hostCardType
+    hostCardType,
+    seoType,
   ],
 };

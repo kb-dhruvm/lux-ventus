@@ -80,24 +80,26 @@ export type HostCard = {
 
 export type CategoryCard = {
   _type: "categoryCard";
-  selectCategory?: {
+  selectCategory?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "categories";
-  };
+  }>;
 };
 
 export type TopRatedPosts = {
   _type: "topRatedPosts";
   title?: string;
   isManual?: boolean;
-  selectPost?: {
+  selectPost?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "posts";
-  };
+  }>;
 };
 
 export type NewsLetterCard = {
@@ -109,12 +111,13 @@ export type TrandingPost = {
   _type: "trandingPost";
   title?: string;
   isManual?: boolean;
-  posts?: {
+  posts?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "posts";
-  };
+  }>;
 };
 
 export type FeaturePost = {
@@ -139,6 +142,7 @@ export type Posts = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  pageLocation?: string;
   title?: string;
   slug?: Slug;
   teaserDescription?: string;
@@ -219,6 +223,28 @@ export type Pages = {
     _type: "reference";
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "leftPannel";
+  };
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   };
 };
 
@@ -378,7 +404,7 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | HostCard | CategoryCard | TopRatedPosts | NewsLetterCard | TrandingPost | FeaturePost | SocialLinks | Posts | Hosts | Pages | Seo | LeftPannel | TopicsSlider | HeroSection | Header | HeaderLink | Categories | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/queries/layout.query.ts
 // Variable: HEADER_QUERY
@@ -398,6 +424,274 @@ export type HEADER_QUERYResult = {
 // Variable: LEFT_PANEL_QUERY
 // Query: *[_type == "leftPanel"] | order(_updatedAt desc)[0]
 export type LEFT_PANEL_QUERYResult = null;
+// Variable: TOP_RATED_POSTS_QUERY
+// Query: *[_type == "posts"] | order(ratings desc)[0...5]{  pageLocation,    title,    image,    alt,    ratings}
+export type TOP_RATED_POSTS_QUERYResult = Array<{
+  pageLocation: string | null;
+  title: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  alt: string | null;
+  ratings: number | null;
+}>;
+
+// Source: ./src/queries/pages.query.ts
+// Variable: PAGE_QUERY
+// Query: *[_type == "pages" && slug.current == $slug][0]{  title,  heroSection,  topics{    title,    topics[]->  },  leftPannel->{    ...,    selectBlcks[]{      ...,      selectHost->,      selectCategory[]->{        title,        "postCount": count(*[_type == "posts" && references(^._id)])      },      selectPost[]->{            title,    image,    alt,    ratings,        pageLocation      }    }  },  body[]{    ...,    featurePost->{      teaserDescription,      alt,      title,      pageLocation,      publishedAt,      image,      author->{          name,          image,          alt        },      category->{        title      }    },    posts[]->{      teaserDescription,      alt,      title,      pageLocation,      publishedAt,      image,      author->{        name,        image,        alt      },      category->{        title      }    }  }}
+export type PAGE_QUERYResult = {
+  title: string | null;
+  heroSection: HeroSection | null;
+  topics: {
+    title: string | null;
+    topics: Array<{
+      _id: string;
+      _type: "categories";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title?: string;
+      slug?: Slug;
+      thumbline?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      alt?: string;
+    }> | null;
+  } | null;
+  leftPannel: {
+    _id: string;
+    _type: "leftPannel";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+    selectBlcks: Array<{
+      _key: string;
+      _type: "categoryCard";
+      selectCategory: Array<{
+        title: string | null;
+        postCount: number;
+      }> | null;
+      selectHost: null;
+      selectPost: null;
+    } | {
+      _key: string;
+      _type: "hostCard";
+      selectHost: {
+        _id: string;
+        _type: "hosts";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        name?: string;
+        image?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        alt?: string;
+        description?: string;
+        socialLinks?: Array<{
+          _key: string;
+        } & SocialLinks>;
+        hostText?: string;
+      } | null;
+      selectCategory: null;
+      selectPost: null;
+    } | {
+      _key: string;
+      _type: "newsLetterCard";
+      showNewsLetterCard?: boolean;
+      selectHost: null;
+      selectCategory: null;
+      selectPost: null;
+    } | {
+      _key: string;
+      _type: "topRatedPosts";
+      title?: string;
+      isManual?: boolean;
+      selectPost: Array<{
+        title: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+        ratings: number | null;
+        pageLocation: string | null;
+      }> | null;
+      selectHost: null;
+      selectCategory: null;
+    }> | null;
+  } | null;
+  body: Array<{
+    _key: string;
+    _type: "featurePost";
+    featurePost: {
+      teaserDescription: string | null;
+      alt: string | null;
+      title: string | null;
+      pageLocation: string | null;
+      publishedAt: string | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      author: {
+        name: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+      } | null;
+      category: {
+        title: string | null;
+      } | null;
+    } | null;
+    posts: null;
+  } | {
+    _key: string;
+    _type: "trandingPost";
+    title?: string;
+    isManual?: boolean;
+    posts: Array<{
+      teaserDescription: string | null;
+      alt: string | null;
+      title: string | null;
+      pageLocation: string | null;
+      publishedAt: string | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      author: {
+        name: string | null;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        alt: string | null;
+      } | null;
+      category: {
+        title: string | null;
+      } | null;
+    }> | null;
+    featurePost: null;
+  }> | null;
+} | null;
+// Variable: PAGE_SEO_QUERY
+// Query: *[_type == "pages" && slug.current == $slug][0]{  seo}
+export type PAGE_SEO_QUERYResult = {
+  seo: Seo | null;
+} | null;
+
+// Source: ./src/queries/posts.query.ts
+// Variable: TRANDING_POSTS_QUERY
+// Query: *[_type == "posts"] | order(publishedAt desc)[0...5]{  teaserDescription,  alt,  title,  pageLocation,  publishedAt,  image,  author->{    name,    image,    alt  },  category->{    title  }}
+export type TRANDING_POSTS_QUERYResult = Array<{
+  teaserDescription: string | null;
+  alt: string | null;
+  title: string | null;
+  pageLocation: string | null;
+  publishedAt: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  author: {
+    name: string | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    alt: string | null;
+  } | null;
+  category: {
+    title: string | null;
+  } | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -405,5 +699,9 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"header\"] | order(_updatedAt desc)[0]": HEADER_QUERYResult;
     "*[_type == \"leftPanel\"] | order(_updatedAt desc)[0]": LEFT_PANEL_QUERYResult;
+    "*[_type == \"posts\"] | order(ratings desc)[0...5]{\n  pageLocation,\n    title,\n    image,\n    alt,\n    ratings\n}\n": TOP_RATED_POSTS_QUERYResult;
+    "*[_type == \"pages\" && slug.current == $slug][0]{\n  title,\n  heroSection,\n  topics{\n    title,\n    topics[]->\n  },\n  leftPannel->{\n    ...,\n    selectBlcks[]{\n      ...,\n      selectHost->,\n      selectCategory[]->{\n        title,\n        \"postCount\": count(*[_type == \"posts\" && references(^._id)])\n      },\n      selectPost[]->{\n            title,\n    image,\n    alt,\n    ratings,\n        pageLocation\n      }\n    }\n  },\n  body[]{\n    ...,\n    featurePost->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n          name,\n          image,\n          alt\n        },\n      category->{\n        title\n      }\n    },\n    posts[]->{\n      teaserDescription,\n      alt,\n      title,\n      pageLocation,\n      publishedAt,\n      image,\n      author->{\n        name,\n        image,\n        alt\n      },\n      category->{\n        title\n      }\n    }\n  }\n}": PAGE_QUERYResult;
+    "*[_type == \"pages\" && slug.current == $slug][0]{\n  seo\n}": PAGE_SEO_QUERYResult;
+    "*[_type == \"posts\"] | order(publishedAt desc)[0...5]{\n  teaserDescription,\n  alt,\n  title,\n  pageLocation,\n  publishedAt,\n  image,\n  author->{\n    name,\n    image,\n    alt\n  },\n  category->{\n    title\n  }\n}": TRANDING_POSTS_QUERYResult;
   }
 }

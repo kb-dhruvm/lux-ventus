@@ -21,8 +21,8 @@ export const topRatedPostsType = defineType({
     defineField({
       name: "selectPost",
       title: "Select Post",
-      type: "reference",
-      to: [{ type: "posts" }],
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "posts" }] }],
       hidden: ({ parent }) => !parent?.isManual,
     }),
   ],
