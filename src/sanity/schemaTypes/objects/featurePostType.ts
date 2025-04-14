@@ -13,4 +13,9 @@ export const featurePostType = defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    prepare: () => ({
+      title: "Feature Post",
+    }),
+  },
 });

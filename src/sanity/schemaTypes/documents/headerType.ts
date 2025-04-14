@@ -24,4 +24,9 @@ export const headerType = defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    prepare: () => ({
+      title: "Header",
+    }),
+  },
 });

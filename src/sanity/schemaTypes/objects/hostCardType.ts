@@ -13,4 +13,9 @@ export const hostCardType = defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    prepare: () => ({
+      title: "Host Card",
+    }),
+  },
 });

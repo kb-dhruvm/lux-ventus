@@ -1,5 +1,6 @@
 import type { StructureResolver } from "sanity/structure";
 import { UsersIcon } from "@sanity/icons";
+import { singletonListItem } from "@/utils/singleton-list-item.helper";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -11,7 +12,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("categories").title("Categories"),
       S.documentTypeListItem("posts").title("Posts"),
       S.divider(),
-      S.documentTypeListItem("header").title("Header"),
+      singletonListItem(S, "header", "Header"),
       S.documentTypeListItem("leftPannel").title("Left Pannel"),
       S.divider(),
       S.documentTypeListItem("hosts").title("Hosts / Authors").icon(UsersIcon),

@@ -28,4 +28,9 @@ export const socialLinksType = defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    prepare: () => ({
+      title: "Social Links",
+    }),
+  },
 });
