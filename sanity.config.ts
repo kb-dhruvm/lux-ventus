@@ -15,26 +15,52 @@ import { structure } from "./src/sanity/structure";
 import { presentationTool } from "sanity/presentation";
 import { resolve } from "@/sanity/presentation/resolve";
 import { media } from "sanity-plugin-media";
+import {
+  dashboardTool,
+  projectUsersWidget,
+  projectInfoWidget
+} from "@sanity/dashboard";
 
-export default defineConfig({
-  basePath: "/studio",
-  projectId,
-  dataset,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
-  plugins: [
-    media(),
-    presentationTool({
-      resolve,
-      previewUrl: {
-        previewMode: {
-          enable: "/api/draft-mode/enable",
+export default defineConfig([
+  {
+    name: "lux-ventus",
+    title: "Lux Ventus",
+    basePath: "/studio",
+    projectId,
+    dataset,
+    // Add and edit the content schema in the './sanity/schemaTypes' folder
+    schema,
+    plugins: [
+      dashboardTool({
+        widgets: [
+          projectInfoWidget(),
+          projectUsersWidget(),
+        ],
+      }),
+      media(),
+      presentationTool({
+        resolve,
+        previewUrl: {
+          previewMode: {
+            enable: "/api/draft-mode/enable",
+          },
         },
-      },
-    }),
-    structureTool({ structure }),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
-  ],
-});
+      }),
+      structureTool({ structure }),
+      // Vision is for querying with GROQ from inside the Studio
+      // https://www.sanity.io/docs/the-vision-plugin
+      visionTool({ defaultApiVersion: apiVersion }),
+    ],
+    tools: (prev, { currentUser }) => {
+      const isAdmin = currentUser?.roles.some(
+        (role) => role.name === "administrator"
+      );
+
+      if (isAdmin) {
+        return prev;
+      }
+
+      return prev.filter((tool) => tool.name !== "vision");
+    },
+  },
+]);
