@@ -12,5 +12,9 @@ export const categotyCardType = defineType({
       of: [{ type: "reference", to: [{ type: "categories" }] }],
       validation: (Rule) => Rule.required(),
     }),
-  ],
+  ],preview: {
+    prepare: () => ({
+      title: "Category Card",
+    }),
+  },
 });

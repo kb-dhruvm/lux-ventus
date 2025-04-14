@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity";
@@ -8,12 +7,6 @@ import { HEADER_QUERY } from "@/queries/layout.query";
 import Header from "@/components/layout/Header";
 import "@/app/globals.css";
 import Footer from "@/components/layout/Footer";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -39,30 +32,28 @@ export default async function RootLayout({
   }));
 
   return (
-    <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>
-        <Header
-          navItems={_navLinks}
-          showSearch={enableSearch}
-          button={
-            button
-              ? {
-                  slug: button.link!,
-                  title: button.title!,
-                }
-              : undefined
-          }
-        />
-        {children}
-        <Footer />
-        <SanityLive />
-        {(await draftMode()).isEnabled && (
-          <>
-            <DisableDraftMode />
-            <VisualEditing />
-          </>
-        )}
-      </body>
-    </html>
+    <>
+      <Header
+        navItems={_navLinks}
+        showSearch={enableSearch}
+        button={
+          button
+            ? {
+                slug: button.link!,
+                title: button.title!,
+              }
+            : undefined
+        }
+      />
+      {children}
+      <Footer />
+      <SanityLive />
+      {(await draftMode()).isEnabled && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
+    </>
   );
 }

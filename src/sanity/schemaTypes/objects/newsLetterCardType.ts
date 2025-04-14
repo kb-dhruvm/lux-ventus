@@ -13,4 +13,9 @@ export const newsLetterCardType = defineType({
       initialValue: true,
     }),
   ],
+  preview: {
+    prepare: () => ({
+      title: "News Letter Card",
+    }),
+  },
 });

@@ -12,4 +12,12 @@ export const newsletterType = defineType({
       readOnly: true,
     }),
   ],
+  preview: {
+    select: {
+      email: "email",
+    },
+    prepare: ({ email }) => ({
+      title: email,
+    }),
+  },
 });
