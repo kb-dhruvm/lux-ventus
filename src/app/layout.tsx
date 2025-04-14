@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import { Poppins } from "next/font/google";
+import GoogleTagManagerScript from "@/components/layout/scripts/GoogleTagManagerScript";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -20,11 +21,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <head>
+        <GoogleTagManagerScript />
+      </head>
+      <body className={`${poppins.variable} antialiased`}>{children}</body>
     </html>
   );
 }
