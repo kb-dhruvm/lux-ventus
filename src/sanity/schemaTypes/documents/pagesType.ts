@@ -37,6 +37,15 @@ export const pagesType = defineType({
       title: "Body",
       type: "array",
       of: [{ type: "featurePost" }, { type: "trandingPost" }],
+      options: {
+        insertMenu: {
+          views: [
+            {
+              name: "grid",
+            }
+          ]
+        },
+      },
     }),
     defineField({
       name: "leftPannel",
@@ -48,6 +57,13 @@ export const pagesType = defineType({
       name: "seo",
       title: "SEO",
       type: "seo",
+      readOnly: ({ currentUser }) => {
+        const canNotEdit = currentUser?.roles.some(
+          (role) => role.name === "viewer"
+        );
+
+        return !!canNotEdit;
+      },
     }),
   ],
 });
