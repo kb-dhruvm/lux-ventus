@@ -21,9 +21,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <GoogleTagManagerScript />
-      </head>
+      <head>{/* <GoogleTagManagerScript /> */}</head>
       <body className={`${poppins.variable} antialiased`}>{children}</body>
     </html>
   );
