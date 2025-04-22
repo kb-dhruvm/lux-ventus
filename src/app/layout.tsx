@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import { Poppins } from "next/font/google";
-import GoogleTagManagerScript from "@/components/layout/scripts/GoogleTagManagerScript";
+// import GoogleTagManagerScript from "@/components/layout/scripts/GoogleTagManagerScript";
 
 const poppins = Poppins({
   variable: "--font-poppins",
